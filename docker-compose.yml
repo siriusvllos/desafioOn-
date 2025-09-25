@@ -1,0 +1,41 @@
+# definição da versão do docker-compose
+version: "3.8"
+
+#definimos os serviços do app: n8n e postgres
+services:
+  n8n:
+    image: n8nio/n8n:1.85.4 # Imagem escolhida no enunciado
+    restart: always
+    ports:
+      - "5678:5678" # porta padrão n8n p/ interface web
+
+    environment:
+      - DB_TYPE=postgresdb # escolha do banco de dados
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_DATABASE=n8n
+      - DB_POSTGRESDB_USER=n8n # outras definições de ambiente
+      - DB_POSTGRESDB_PASSWORD=n8n
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=n8nuser
+      - N8N_BASIC_AUTH_PASSWORD=n8npassword
+
+    volumes:
+      - n8n_data:/home/node/.n8n # cria um volume PERSISTENTE "n8n_data"
+      - ./n8n/custom:/home/node/.n8n/custom # mapeia a pasta local; bind mount
+
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:15 # versão LTS
+    restart: always
+    environment:
+      - POSTGRES_DB=n8n # mesmas credenciais q o n8n espera
+      - POSTGRES_USER=n8n
+      - POSTGRES_PASSWORD=n8n
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  # declaração dos volumes
+  n8n_data:
+  postgres_data:

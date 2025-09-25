@@ -1,0 +1,26 @@
+{
+  "name": "desafioTecnicoOnfly",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm install",
+    "build": "tsc -p tsconfig.json",
+    "docker_up": "docker-compose up -d",
+    "docker_down": "docker-compose down"
+  },
+  "author": "Sirius Victor (siriusvllos)",
+  "license": "MIT",
+  "dependencies": {
+    "@langchain/core": "^0.3.77",
+    "@n8n/config": "^1.56.1",
+    "@n8n/errors": "^0.5.0",
+    "@sentry/node": "^10.15.0",
+    "axios": "^1.12.2",
+    "n8n-workflow": "^1.110.0"
+  },
+  "devDependencies": {
+    "@types/luxon": "^3.7.1",
+    "@types/nock": "^11.1.0",
+    "@types/ssh2": "^1.15.5"
+  }
+}
